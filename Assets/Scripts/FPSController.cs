@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class FPSController : MonoBehaviour
 {
@@ -25,6 +26,9 @@ public class FPSController : MonoBehaviour
     List<Gun> equippedGuns = new List<Gun>();
     int gunIndex = 0;
     Gun currentGun = null;
+
+    //Input additions
+    Vector2 movement;
 
     // properties
     public GameObject Cam { get { return cam; } }
@@ -71,18 +75,39 @@ public class FPSController : MonoBehaviour
             velocity.y = -1;// -0.5f;
         }
 
-        Vector2 movement = GetPlayerMovementVector();
+        //Vector2 movement = GetPlayerMovementVector();
         Vector3 move = transform.right * movement.x + transform.forward * movement.y;
         controller.Move(move * movementSpeed * (GetSprint() ? 2 : 1) * Time.deltaTime);
 
-        if (Input.GetButtonDown("Jump") && grounded)
+        /*if (Input.GetButtonDown("Jump") && grounded)
         {
             velocity.y += Mathf.Sqrt (jumpForce * -1 * gravity);
-        }
+        }*/
 
         velocity.y += gravity * Time.deltaTime;
 
         controller.Move(velocity * Time.deltaTime);
+    }
+
+    // using new Input system
+    /*public void Jump(InputAction.CallbackContext ctx)
+    {
+        if (grounded)
+        {
+            velocity.y += Mathf.Sqrt(jumpForce * -1 * gravity);
+        }
+    }*/ // for static input
+    public void OnJump()
+    {
+        if (grounded)
+        {
+            velocity.y += Mathf.Sqrt(jumpForce * -1 * gravity);
+        }
+    }
+
+    public void OnMovement(InputValue value)
+    {
+        movement = value.Get<Vector2>();
     }
 
     void Look()
