@@ -186,6 +186,7 @@ public class FPSController : MonoBehaviour
         // don't fire if we don't have a gun
         if (currentGun == null)
             return;
+        
 
 
         // pressed the fire button

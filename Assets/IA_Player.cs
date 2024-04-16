@@ -175,7 +175,7 @@ public partial class @IA_Player: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""e53e2dc2-bcc4-472c-be7b-cc887d7a45f6"",
                     ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": ""Hold(duration=0.1,pressPoint=0.1)"",
+                    ""interactions"": ""Hold(duration=0.1,pressPoint=0.5)"",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""HoldFire"",
