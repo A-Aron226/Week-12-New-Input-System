@@ -29,6 +29,7 @@ public class FPSController : MonoBehaviour
 
     //Input additions
     Vector2 movement;
+    Vector2 looking;
 
     // properties
     public GameObject Cam { get { return cam; } }
@@ -110,9 +111,41 @@ public class FPSController : MonoBehaviour
         movement = value.Get<Vector2>();
     }
 
+    public void OnFire()
+    {
+        if (currentGun == null)
+            return;
+
+        currentGun?.AttemptFire();       
+    }
+
+    public void OnHoldFire()
+    {
+        if (currentGun == null)
+            return;
+
+        if (currentGun.AttemptAutomaticFire())
+        {
+            currentGun?.AttemptFire();
+        }
+    }
+
+    public void OnAltFire()
+    {
+        if (currentGun == null)
+            return;
+
+        currentGun?.AttemptAltFire();
+    }
+
+    public void OnLook(InputValue val)
+    {
+        looking = val.Get<Vector2>();
+    }
+
     void Look()
     {
-        Vector2 looking = GetPlayerLook();
+        //Vector2 looking = GetPlayerLook();
         float lookX = looking.x * lookSensitivityX * Time.deltaTime;
         float lookY = looking.y * lookSensitivityY * Time.deltaTime;
 
@@ -154,8 +187,9 @@ public class FPSController : MonoBehaviour
         if (currentGun == null)
             return;
 
+
         // pressed the fire button
-        if(GetPressFire())
+        /*if(GetPressFire())
         {
             currentGun?.AttemptFire();
         }
@@ -171,7 +205,7 @@ public class FPSController : MonoBehaviour
         if (GetPressAltFire())
         {
             currentGun?.AttemptAltFire();
-        }
+        }*/
     }
 
     void EquipGun(Gun g)
