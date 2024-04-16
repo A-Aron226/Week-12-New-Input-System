@@ -30,6 +30,7 @@ public class FPSController : MonoBehaviour
     //Input additions
     Vector2 movement;
     Vector2 looking;
+    bool isHold = false;
 
     // properties
     public GameObject Cam { get { return cam; } }
@@ -60,6 +61,10 @@ public class FPSController : MonoBehaviour
         Look();
         HandleSwitchGun();
         FireGun();
+        if (isHold)
+        {
+            OnHoldFire();
+        }
 
         // always go back to "no velocity"
         // "velocity" is for movement speed that we gain in addition to our movement (falling, knockback, etc.)
@@ -127,6 +132,7 @@ public class FPSController : MonoBehaviour
         if (currentGun.AttemptAutomaticFire())
         {
             currentGun?.AttemptFire();
+            isHold = true;
         }
     }
 
