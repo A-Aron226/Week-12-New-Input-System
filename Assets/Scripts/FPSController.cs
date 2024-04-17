@@ -134,6 +134,11 @@ public class FPSController : MonoBehaviour
             currentGun?.AttemptFire();
             isHold = true;
         }
+
+        else
+        {
+            isHold = false;
+        }
     }
 
     public void OnAltFire()
