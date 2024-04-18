@@ -1,13 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class PauseMenu : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
     {
-        
+        Cursor.lockState = CursorLockMode.None; //unlocks cursor
     }
 
     // Update is called once per frame
@@ -24,5 +24,6 @@ public class PauseMenu : MonoBehaviour
     private void OnDisable()
     {
         Time.timeScale = 1; //resumes game
+        Cursor.lockState = CursorLockMode.Locked; //locks the cursor
     }
 }
