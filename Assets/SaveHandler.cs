@@ -6,11 +6,12 @@ using System.IO;
 
 public class SaveHandler : MonoBehaviour
 {
-    string path = ""; //file path to save and load data file from
+    string path;  //file path to save and load data file from
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        path = Application.dataPath + "/testSave.json"; //saves to unity project folder
     }
 
     // Update is called once per frame
@@ -21,7 +22,9 @@ public class SaveHandler : MonoBehaviour
 
     public void Save()
     {
-        if (Keyboard.current.vKey.wasPressedThisFrame)
+        //if (Keyboard.current.vKey.wasPressedThisFrame) //testing code
+
+        try //attempts to check if save file exists
         {
             SaveData sd = new SaveData();
             sd.playerPosition = FindAnyObjectByType<FPSController>().transform.position; //Gets player object from fps script
@@ -29,16 +32,26 @@ public class SaveHandler : MonoBehaviour
             string jsonText = JsonUtility.ToJson(sd);
             Debug.Log(jsonText);
 
-            
+
             File.WriteAllText(path, jsonText); //saves position in json text then stores it into file path
+
             Debug.Log("Saved");
+        }
+
+        catch (System.IO.FileNotFoundException e) //prints log if a FileNotFound exception occurs
+        {
+            Debug.Log("Save File does not exist.");
+        }
+
+        catch(System.Exception e) //prints out anything other error that occurs
+        {
+            Debug.Log(e);
         }
     }
 
     public void Load()
     {
-        if (Keyboard.current.lKey.wasPressedThisFrame)
-        {
+        //if (Keyboard.current.lKey.wasPressedThisFrame)
             string savetext = File.ReadAllText(path); //reads file path
             Debug.Log(savetext);
 
@@ -46,7 +59,6 @@ public class SaveHandler : MonoBehaviour
             FindAnyObjectByType<FPSController>().transform.position = myData.playerPosition; //loads player position to where the last position was saved
 
             Debug.Log("Loaded");
-        }
     }
 }
 public class SaveData //Saving Position, ammo, and health
