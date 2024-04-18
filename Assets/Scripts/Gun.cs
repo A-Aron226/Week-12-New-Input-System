@@ -18,7 +18,8 @@ public class Gun : MonoBehaviour
     [SerializeField] protected bool isAutomatic = false;
 
     // private variables
-    protected int ammo;
+    //protected int ammo;
+    public int ammo;
     protected float elapsed = 0;
 
     // Start is called before the first frame update

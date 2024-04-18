@@ -9,7 +9,7 @@ public class Damageable : MonoBehaviour
     public UnityEvent<Vector3> OnHit;
     [SerializeField] GameObject damageNumberPrefab;
 
-    float currentHp;
+    public float currentHp;
 
     // Start is called before the first frame update
     void Start()
