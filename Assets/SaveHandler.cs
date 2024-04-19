@@ -18,15 +18,16 @@ public class SaveHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Save();
-        //Load();
+        Save();
+        Load();
     }
 
     public void Save()
     {
-        //if (Keyboard.current.vKey.wasPressedThisFrame) //testing code
-        
-        
+        if (Keyboard.current.vKey.wasPressedThisFrame) //testing code
+        {
+
+
             try //attempts to check if save file exists
             {
                 SaveData sd = new SaveData();
@@ -45,6 +46,7 @@ public class SaveHandler : MonoBehaviour
 
             catch (System.IO.FileNotFoundException e) //prints log if a FileNotFound exception occurs
             {
+                Debug.Log(e);
                 Debug.Log("Save File does not exist.");
             }
 
@@ -52,26 +54,29 @@ public class SaveHandler : MonoBehaviour
             {
                 Debug.Log(e);
             }
+        }
         
     }
 
     public void Load()
     {
-        //if (Keyboard.current.lKey.wasPressedThisFrame)
+        if (Keyboard.current.lKey.wasPressedThisFrame)
+        {
 
-        SceneManager.UnloadSceneAsync("PauseScene");
+            //SceneManager.UnloadSceneAsync("PauseScene");
 
-        string savetext = File.ReadAllText(path); //reads file path
-        Debug.Log(savetext);
+            string savetext = File.ReadAllText(path); //reads file path
+            Debug.Log(savetext);
 
             SaveData myData = JsonUtility.FromJson<SaveData>(savetext); //converts string savetext in file from json
             FindAnyObjectByType<FPSController>().transform.position = myData.playerPosition; //loads player position to where the last position was saved
             FindAnyObjectByType<Gun>().ammo = myData.gunAmmo;
             FindAnyObjectByType<Damageable>().currentHp = myData.health;
 
-        
 
-        Debug.Log("Loaded");
+
+            Debug.Log("Loaded");
+        }
         
     }
 }
